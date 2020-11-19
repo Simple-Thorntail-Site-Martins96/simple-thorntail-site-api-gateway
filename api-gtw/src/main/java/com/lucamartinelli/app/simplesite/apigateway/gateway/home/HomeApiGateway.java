@@ -1,5 +1,6 @@
 package com.lucamartinelli.app.simplesite.apigateway.gateway.home;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -26,17 +27,17 @@ public class HomeApiGateway implements HomeServiceInterface {
 	
 
 	public Response getRoles() {
-		return getClient().invoke("getRoles", headers, null, Response.class);
+		return getClient().invoke("getRoles", headers, null, Response.class, new ArrayList<>());
 	}
 	
 	
 	public String getFullName() {
-		return getClient().invoke("getFullName", headers, null, String.class);
+		return getClient().invoke("getFullName", headers, null, String.class, new ArrayList<>());
 	}
 
 	
 	public Response getServices() {
-		return getClient().invoke("getServices", headers, null, Response.class);
+		return getClient().invoke("getServices", headers, null, Response.class, new ArrayList<>());
 	}
 	
 }

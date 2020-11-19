@@ -2,6 +2,7 @@ package com.lucamartinelli.app.simplesite.apigateway.rest;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -44,47 +45,47 @@ public class APIClientProxy<T> {
     			.build();
     }
 
-    public <R, InType> R invoke(String methodName, HttpHeaders headers, InType payload, Class<R> resultType) {
+    public <ResType, InType> ResType invoke(String methodName, HttpHeaders headers, InType payloadParams, Class<ResType> resultType, List<Class<?>> args) {
     	try {
-			loadInvokeInformation(methodName);
+			loadInvokeInformation(methodName, args);
 		} catch (IllegalArgumentException | NoSuchMethodException | SecurityException e) {
 			log.severe(e.getLocalizedMessage());
 			return null;
 		}
-    	if (payload == null)
-    		return invokeWithoutBody(headers, resultType, payload);
+    	if (payloadParams == null)
+    		return invokeWithoutBody(headers, resultType);
     	else
-    		return invokeWithBody(headers, resultType);
+    		return invokeWithBody(headers, resultType, payloadParams);
     }
     	
-	public <ResType> ResType invokeWithBody(HttpHeaders headers, Class<ResType> resultType) {
+	public <ResType, InType> ResType invokeWithBody(HttpHeaders headers, Class<ResType> resultType, InType payload) {
     	return client
     			.target(host)
     			.path(path)
     			.request()
     			.headers(new MultivaluedHashMap<String, Object>(headers.getRequestHeaders()))
-    			.method(method, resultType);
+    			.method(method, Entity.entity(payload, contentType), resultType);
     }
 
-	public <ResType, InType> ResType invokeWithoutBody(HttpHeaders headers, Class<ResType> resultType, InType payload) {
+	public <ResType> ResType invokeWithoutBody(HttpHeaders headers, Class<ResType> resultType) {
 		loadBodyContentType(headers);
 		return client
 				.target(host)
 				.path(path)
 				.request()
 				.headers(new MultivaluedHashMap<String, Object>(headers.getRequestHeaders()))
-				.method(method, Entity.entity(payload, contentType), resultType);
+				.method(method, resultType);
 	}
     
     
     
     //--------------------------------------------------------------------------------------------
     
-    private void loadInvokeInformation(String methodName) 
+    private void loadInvokeInformation(String methodName, List<Class<?>> args) 
     		throws NoSuchMethodException, SecurityException, IllegalArgumentException {
     	Method getRolesMethod = null;
 		try {
-			getRolesMethod = restInterface.getMethod(methodName, new Class[0]);
+			getRolesMethod = restInterface.getMethod(methodName, args.toArray(new Class[0]));
 		} catch (NoSuchMethodException | SecurityException e) {
 			log.log(Level.SEVERE, "Error in reflection: ", e);
 			throw e;
