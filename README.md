@@ -16,11 +16,14 @@ Inside the package _com.lucamartinelli.app.simplesite.apigateway.rest_, here is 
 Here the requests and response are dumped and logged to file system.
 ####  - Service Logic
 To register an API there are some classes in a structure under _com.lucamartinelli.app.simplesite.apigateway.gateway_ that define the interface, client factory and the exposing logic.
-For example, in Home module, the __HomeApiGateway__ create the logic for interface __HomeServiceInterface__, and this logic is exposed via JAX-RS.
-In __HomeApiGateway__ there are annotations for Fault tollerance and Metrics, when the service is triggered the flow create or load a Home Proxy Client and involke the real service, dumping the data.
+For example, in Home module, the __HomeApiGateway__ create the logic for interface __HomeServiceInterface__ (This interface is included in the '__Commons Interface__' module), and this logic is exposed via JAX-RS.
+In __HomeApiGateway__ there are annotations for Fault tollerance, Swagger and Metrics, when the service is triggered the flow create or load a Home Proxy Client and involke the real service, dumping the data.
 The __HomeClientFactory__ class create and store the client with home endpoint and interface definition.
 
-The API Client Proxy and Dumper use reflection logics in order to adapt itself to different implementations
+The API Client Proxy and Dumper use reflection logics in order to adapt itself to different implementations.
+
+Swagger definition is exposed at path:<br/>
+http://localhost:8181/api/swagger.json
 
 ## Configuration
 The configuration is simple, are required 2 properties per module (eg. for Home Service are required `home.endpoint.url` and `home.endpoint.rimeout`)

@@ -107,11 +107,6 @@
 		</dependency>
 		<dependency>
 			<groupId>io.thorntail</groupId>
-			<artifactId>swagger</artifactId>
-			<version>2.7.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>io.thorntail</groupId>
 			<artifactId>microprofile-health</artifactId>
 		</dependency>
 		<dependency>
@@ -139,6 +134,13 @@
 		</dependency>
 
 
+		<!-- Required internal module Commons-Iterfaces -->
+		<!-- github url TODO -->
+		<dependency>
+		    <groupId>com.lucamartinelli.app.simplesite</groupId>
+  			<artifactId>Commons-Interfaces</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 
 	</dependencies>

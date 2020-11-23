@@ -20,7 +20,6 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jboss.weld.exceptions.IllegalArgumentException;
 
-import com.lucamartinelli.app.simplesite.apigateway.gateway.home.HomeServiceInterface;
 
 
 public class APIClientProxy<T> {
@@ -96,7 +95,7 @@ public class APIClientProxy<T> {
 		if (!subPath.isEmpty() && !subPath.startsWith("/"))
 			subPath = "/" + subPath;
 		
-		this.path = Optional.of(HomeServiceInterface.class
+		this.path = Optional.of(restInterface
 					.getAnnotation(Path.class).value())
 				.orElse(new String())
 				.concat(subPath);

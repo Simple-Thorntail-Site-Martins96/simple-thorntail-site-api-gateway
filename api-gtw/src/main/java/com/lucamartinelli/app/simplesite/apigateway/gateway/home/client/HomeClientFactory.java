@@ -2,8 +2,8 @@ package com.lucamartinelli.app.simplesite.apigateway.gateway.home.client;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
-import com.lucamartinelli.app.simplesite.apigateway.gateway.home.HomeServiceInterface;
 import com.lucamartinelli.app.simplesite.apigateway.rest.APIClientProxy;
+import com.lucamartinelli.app.simplesite.commons.home.HomeServiceInterface;
 
 
 public class HomeClientFactory {
